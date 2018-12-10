@@ -23,7 +23,7 @@ import java.text.*;
                     System.out.println("Type how many hours the employee worked");
 		double hour = input.nextDouble();
                 input.nextLine();
-                employee.getType().sumActual(employee.getType().getSalary()*hour);        
+                employee.getType().sumActual(employee.getType().getSalary()*hour);
                 }
                 else if(employee.getType().getType() == 2 || employee.getType().getType() == 3) {
                     employee.getType().sumActual(employee.getType().getSalary());
@@ -90,18 +90,23 @@ import java.text.*;
                         case 1:
                             {
                                 undo.push(copy_to_stack(employees));
+                                while(!redo.empty()) {
+                                    redo.pop();
+                                }
                                 employees.add(new Employee(input,today));
                                 int index = employees.size() - 1;
                                 (employees.get(index)).setEmployee_number(i);
                                 (employees.get(index)).Print_emp();
                                 i++;
-                                while(!redo.empty()) {
-                                    redo.pop();
-                                }
+
                                 break;
                             }
                         case 2:
-                            {                                
+                            {
+                                while(!redo.empty()) {
+                                  redo.pop();
+                                }
+                                undo.push(copy_to_stack(employees));
                                 System.out.println("type the employee's Number");
                                 int e_Num = input.nextInt();
                                 input.nextLine();
@@ -109,21 +114,23 @@ import java.text.*;
                                 if(index > -1) {
                                     employees.remove(index);
                                 }
-                                while(!redo.empty()) {
-                                    redo.pop();
-                                }
-                                undo.push(copy_to_stack(employees));
+
                                 break;
                             }
-                        case 3:                            
-                            Card(input,employees);
-                            while(!redo.empty()) {
-                                    redo.pop();
-                            }
-                            undo.push(copy_to_stack (employees));
+                        case 3:
+                        while(!redo.empty()) {
+                          redo.pop();
+                        }
+                        undo.push(copy_to_stack (employees));
+                                                    Card(input,employees);
+
                             break;
                         case 4:
                             {
+                                undo.push(copy_to_stack (employees));
+                                while(!redo.empty()) {
+                                  redo.pop();
+                                }
                                 System.out.println("Type the employee's number");
                                 int index = input.nextInt();
                                 index = search(employees,index);
@@ -134,10 +141,7 @@ import java.text.*;
                                 input.nextLine();
                                 Employee actual = employees.get(index);
                                 actual.getType().sumActual((price%100)*actual.getType().getCommision());
-                                undo.push(copy_to_stack (employees));
-                                while(!redo.empty()) {
-                                    redo.pop();
-                                }
+
                                 }
                                 break;
                             }
@@ -229,5 +233,5 @@ import java.text.*;
                     }
 		}
 	}
-    
+
 }
