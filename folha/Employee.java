@@ -40,7 +40,9 @@ public class Employee {
                 }
             }
             else {
+                if(this.payment_day.getName().equals("mensal $")) {
                 this.payment_day.setDay(this.payment_day.Calculate(today));
+                }
                 if(today.get(GregorianCalendar.DAY_OF_MONTH) == this.payment_day.getDay()) {
                     return true;
                 }

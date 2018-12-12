@@ -10,7 +10,6 @@ package projeto.folha;
  * @author Neto
  */
 import java.util.*;
-import java.text.*;
     public class ProjetoFolha {
 	public static void Card(Scanner input,ArrayList<Employee> employees) {
             System.out.println("Type the employee's id");
@@ -23,7 +22,7 @@ import java.text.*;
                     System.out.println("Type how many hours the employee worked");
 		double hour = input.nextDouble();
                 input.nextLine();
-                employee.getType().sumActual(employee.getType().getSalary()*hour);
+                employee.getType().sumActual(employee.getType().getSalary()*hour);        
                 }
                 else if(employee.getType().getType() == 2 || employee.getType().getType() == 3) {
                     employee.getType().sumActual(employee.getType().getSalary());
@@ -57,6 +56,53 @@ import java.text.*;
                 }
             }
             return -1;
+        }
+        public static boolean was_day(GregorianCalendar today,ArrayList<Employee> employees,int unre) {
+            int t = employees.size();
+            GregorianCalendar before = new GregorianCalendar();
+            before.set(GregorianCalendar.MONTH,today.get(GregorianCalendar.MONTH));
+            if(unre == 1) {
+                before.set(GregorianCalendar.DAY_OF_MONTH, today.get(GregorianCalendar.DAY_OF_MONTH)-1);
+                int quantity = 0;
+                for(int i = 0 ; i < t ; i ++) {
+                    if(employees.get(i).isDay(before)) {
+                        quantity ++ ;
+                    }
+                }
+                if(quantity  != 0) {
+                    for(int i  = 0 ; i < t ; i ++) {
+                        if(employees.get(i).isDay(before)) {
+                            if(employees.get(i).getType().getActual() == 0) {
+                                quantity -- ;
+                            }
+                        }
+                    }
+                }
+                    if(quantity == 0 ) {
+                        return true;
+                    }
+            }
+            else if(unre == 2) {
+                before.set(GregorianCalendar.DAY_OF_MONTH, today.get(GregorianCalendar.DAY_OF_MONTH)+1);  
+                int quantity = 0 ;
+                for(int i = 0 ; i < t ; i ++) {
+                    if(employees.get(i).isDay(today)) {
+                        quantity ++ ;
+                    }
+                }
+                if(quantity!=0) {
+                    for(int i = 0 ; i < t ; i ++) {
+                        if(employees.get(i).isDay(today)&&employees.get(i).getType().getActual() == 0 ) {
+                            quantity -- ;
+                        }
+                    }
+                    if(quantity == 0 ) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
         public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
@@ -98,13 +144,13 @@ import java.text.*;
                                 (employees.get(index)).setEmployee_number(i);
                                 (employees.get(index)).Print_emp();
                                 i++;
-
+                                
                                 break;
                             }
                         case 2:
-                            {
+                            {   
                                 while(!redo.empty()) {
-                                  redo.pop();
+                                    redo.pop();
                                 }
                                 undo.push(copy_to_stack(employees));
                                 System.out.println("type the employee's Number");
@@ -114,22 +160,20 @@ import java.text.*;
                                 if(index > -1) {
                                     employees.remove(index);
                                 }
-
                                 break;
                             }
-                        case 3:
-                        while(!redo.empty()) {
-                          redo.pop();
-                        }
-                        undo.push(copy_to_stack (employees));
-                                                    Card(input,employees);
-
+                        case 3:                            
+                            while(!redo.empty()) {
+                                    redo.pop();
+                            }
+                            undo.push(copy_to_stack (employees));
+                            Card(input,employees);
                             break;
                         case 4:
                             {
                                 undo.push(copy_to_stack (employees));
                                 while(!redo.empty()) {
-                                  redo.pop();
+                                    redo.pop();
                                 }
                                 System.out.println("Type the employee's number");
                                 int index = input.nextInt();
@@ -141,7 +185,7 @@ import java.text.*;
                                 input.nextLine();
                                 Employee actual = employees.get(index);
                                 actual.getType().sumActual((price%100)*actual.getType().getCommision());
-
+                                
                                 }
                                 break;
                             }
@@ -194,12 +238,12 @@ import java.text.*;
                                     System.out.println("Can't undo");
                                 }
                                 else {
+                                    
+                                    if(was_day(today,employees,unre)) {
+                                        today.add(GregorianCalendar.DAY_OF_MONTH, -1);
+                                    }
                                     redo.push(copy_to_stack(employees));
                                     employees = undo.pop();
-                                    int t = employees.size();
-                                    for( int l  = 0 ; l < t ; l ++ ) {
-                                        System.out.println(employees.get(l).getName());
-                                    }
                                 }
                             }
                             else if (unre == 2) {
@@ -209,29 +253,42 @@ import java.text.*;
                                 else {
                                     undo.push(copy_to_stack(employees));
                                     employees = redo.pop();
-                                    int t = employees.size();
-                                    for(int l  = 0 ; l < t ; l ++ ) {
-                                        System.out.println(employees.get(l).getName());
+                                    if(was_day(today,employees,unre)) {
+                                        today.add(GregorianCalendar.DAY_OF_MONTH, 1);
                                     }
                                 }
                             }
                             break;
                     //PrintSchedule();
                         case 9:
+                            System.out.println("Type the employee's id");
+                            int identity = search(employees,input.nextInt());
+                            input.nextLine();
+                            Employee actual = employees.get(identity);
+                            System.out.println(actual.getName()+" Choose an option");
                             int t = Pay_types.size();
                             for( int k = 0 ; k < t ; k ++ ){
                                 System.out.println((k+1) + ": " +Pay_types.get(k).getName() );
                             }
+                            int pt = input.nextInt();
+                            actual.setPayment_Day(Pay_types.get(pt));
                             break;
                     //create schedule
                         case 10:
                             System.out.println("Type the new Payment Type");
-                            Pay_types.add(new Payment(input.next(),input.next(),input.next()));
+                            String type_name = input.next();
+                            int day = input.nextInt();
+                            if(type_name.equals("semanal")) {
+                            Pay_types.add(new Payment(type_name,day,input.next()));
+                            }
+                            else {
+                                Pay_types.add(new Payment(type_name,day,""));
+                            }
                             break;
                         default:
                             break;
                     }
 		}
 	}
-
+    
 }

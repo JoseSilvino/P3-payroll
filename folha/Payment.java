@@ -42,13 +42,17 @@ public class Payment {
         this.day = day;
     }
     public int Calculate(GregorianCalendar today) {
+        int or_month = today.get(GregorianCalendar.MONTH);
+        int or_d = today.get(GregorianCalendar.DAY_OF_MONTH);
         today.add(GregorianCalendar.MONTH, 1);
         today.set(GregorianCalendar.DAY_OF_MONTH,1);
         do {
             today.add(GregorianCalendar.DAY_OF_MONTH, -1);
         }while(today.get(GregorianCalendar.DAY_OF_WEEK) == GregorianCalendar.SATURDAY || today.get(GregorianCalendar.DAY_OF_WEEK) == GregorianCalendar.SUNDAY );
-        System.out.println("today.get(GregorianCalendar.DAY_OF_MONTH) = "+ today.get(GregorianCalendar.DAY_OF_MONTH));
-        return today.get(GregorianCalendar.DAY_OF_MONTH);
+        int Day_Calculated = today.get(GregorianCalendar.DAY_OF_MONTH);
+        today.set(GregorianCalendar.DAY_OF_MONTH,or_d);
+        today.set(GregorianCalendar.MONTH,or_month);
+        return Day_Calculated;
     }    
     public Payment(int i,GregorianCalendar today) {
         this.day = 0;
@@ -72,7 +76,39 @@ public class Payment {
         this.day_of_week = old.day_of_week;
         this.frequency = old.frequency;
     }
-    public Payment(String base,String day,String day_of_week) {
-        this.name = base;
+    public Payment(String base,int day,String day_of_week) {
+        this.name = base.concat(" " + Integer.toString(day)+" "+day_of_week);
+        System.out.println(this.name);
+        if(!base.equals("mensal")) {
+            this.frequency = day;
+            switch (day_of_week.toLowerCase()) {
+                case "domingo":
+                    this.day_of_week = 1;
+                    break;
+                case "segunda":
+                    this.day_of_week = 2;
+                    break;
+                case "terça":
+                    this.day_of_week = 3;
+                    break;
+                case "quarta":
+                    this.day_of_week = 4;
+                    break;
+                case "quinta":
+                    this.day_of_week = 5;
+                    break;
+                case "sexta":
+                    this.day_of_week = 6;
+                    break;
+                case "sabado":
+                    this.day_of_week = 7;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else{
+            this.day = day;
+        }
     }
 }
