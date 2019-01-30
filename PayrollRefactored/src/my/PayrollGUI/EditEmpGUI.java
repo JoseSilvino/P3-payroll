@@ -149,8 +149,8 @@ public class EditEmpGUI extends javax.swing.JFrame {
                 empregado.setSalary(Double.parseDouble(jTextField1.getText()));
                 break;
              case  "Comissão" :
-                 if(empregado.getClass().equals(Commisioned.class)) {
-                     ((Commisioned)empregado).setCommision(Double.parseDouble(jTextField1.getText()));
+                 if(empregado.getClass().equals(Commissioned.class)) {
+                     ((Commissioned)empregado).setCommision(Double.parseDouble(jTextField1.getText()));
                  }
                  else {
                      javax.swing.JOptionPane.showMessageDialog(null,"Este empregado não é comissionado");

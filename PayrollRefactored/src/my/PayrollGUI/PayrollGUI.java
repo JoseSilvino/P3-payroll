@@ -366,7 +366,7 @@ public class PayrollGUI extends javax.swing.JFrame {
             switch (tipo_emp.toLowerCase()) {
                 case "Comissionado":
                     double comissão = Double.parseDouble(JOptionPane.showInputDialog("Comissao (não colocar o %): "));
-                    novo = new Commisioned(nome,rua,casa,num,salário,tipo_pag,this.schedule.get(2),comissão/100);
+                    novo = new Commissioned(nome,rua,casa,num,salário,tipo_pag,this.schedule.get(2),comissão/100);
                     break;
                 case "Assalariado":
                     novo = new Salaried(nome,rua,casa,num,salário,tipo_pag,this.schedule.get(1));
@@ -455,9 +455,9 @@ public class PayrollGUI extends javax.swing.JFrame {
             int n = Integer.parseInt(JOptionPane.showInputDialog("Número do Empregado :"));
             int index = search(n);
             if(index!=-1) {
-                if(employees.get(index).getClass().equals(Commisioned.class)) {
+                if(employees.get(index).getClass().equals(Commissioned.class)) {
                 double com = Double.parseDouble(JOptionPane.showInputDialog("Valor da venda :"));
-                Commisioned emp = (Commisioned)employees.get(index);
+                Commissioned emp = (Commissioned)employees.get(index);
                 emp.setActual_salary(emp.getActual_salary() + (com*emp.getCommision()));
                 } else {
                     JOptionPane.showMessageDialog(null,"Este empregado não é do tipo Comissionado");
@@ -497,8 +497,10 @@ public class PayrollGUI extends javax.swing.JFrame {
              }
             String s = "";
         for(int i = 0 ; i < employees.size() ;i ++) {
+            employees.get(i).setPaid(false);
             if(employees.get(i).isDay(hoje)) {
                 employees.get(i).setActual_salary(employees.get(i).getActual_salary() - employees.get(i).getTax()*employees.get(i).getActual_salary());
+                employees.get(i).setPaid(true);
                 s = s + employees.get(i);
                 JOptionPane.showMessageDialog(null,s);
             }
