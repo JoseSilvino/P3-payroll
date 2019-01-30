@@ -4,29 +4,29 @@
 
  O projeto Folha de Pagamento é um sistema de administração de funcionários , onde é possivel :
 
- Adicionar Funcionários. (métodojButton1ActionPerformed da classe PayrollGUI)
+     .Adicionar Funcionários. (métodojButton1ActionPerformed da classe PayrollGUI)
 
- Remover Funcionários. (método jButton3ActionPerformed da classe PayrollGUI)
+     .Remover Funcionários. (método jButton3ActionPerformed da classe PayrollGUI)
 
- Lançar o cartão de ponto de um funcionário. (método jButton4ActionPerformed da classe PayrollGUI)
+     .Lançar o cartão de ponto de um funcionário. (método jButton4ActionPerformed da classe PayrollGUI)
 
- Lancar o resultado de uma venda feita por um funcionário comissionado. (método jButton5ActionPerformed da classe PayrollGUI)
+     .Lancar o resultado de uma venda feita por um funcionário comissionado. (método jButton5ActionPerformed da classe PayrollGUI)
 
- Lançar uma taxa de serviço para um funcionario.(método jButton6ActionPerformed da classe PayrollGUI)
+     .Lançar uma taxa de serviço para um funcionario.(método jButton6ActionPerformed da classe PayrollGUI)
 
- Colocar um empregado no Sindicato. (método jButton12ActionPerformed da classe PayrollGUI) 
+     .Colocar um empregado no Sindicato. (método jButton12ActionPerformed da classe PayrollGUI) 
 
- Rodar a folha de pagamento dos funcionários do dia. (método jButton8ActionPerformed da classe PayrollGUI)
+     .Rodar a folha de pagamento dos funcionários do dia. (método jButton8ActionPerformed da classe PayrollGUI)
 
- Desfazer uma das ações acima. (método jButton9ActionPerformed da classe PayrollGUI)
+     .Desfazer uma das ações acima. (método jButton9ActionPerformed da classe PayrollGUI)
 
- Refazer uma das ações desfeita anteriormente. (método jButton10ActionPerformed da classe PayrollGUI)
+     .Refazer uma das ações desfeita anteriormente. (método jButton10ActionPerformed da classe PayrollGUI)
 
- Mudar a agenda de pagamento de um funcionário. (método jButton11ActionPerformed da classe PayrollGUI)
+     .Mudar a agenda de pagamento de um funcionário. (método jButton11ActionPerformed da classe PayrollGUI)
 
- Criar um novo tipo de agenda de funcionários. (método jButton11ActionPerformed da classe PayrollGUI)
+     .Criar um novo tipo de agenda de funcionários. (método jButton11ActionPerformed da classe PayrollGUI)
 
- Mudar detalhes de um empregado. (método jButton7ActionPerformed da classe PayrollGUI)
+     .Mudar detalhes de um empregado. (método jButton7ActionPerformed da classe PayrollGUI)
 
 -Classes : 
     O projeto conta com 9 classes , sendo 3 de Interface Gráfica , sendo elas Commisioned,EditEmpGUI,Employee,Hourly,PayrollGUI,PayrollRefactored(Main),Salaried,Schedule,ScheduleGUI.
@@ -248,6 +248,31 @@ Classe Employee :
    .Vantagem : une um possivel metodo de saber se o array contem um empregado com um de retorna o indice.
 
    .Desvantagem : tempo de execução muito grande , caso haja muitos empregados.
+
+
+-Métodos de desfazer/refazer : 
+
+    .Desfazer(jButton9ActionPerformed) : 
+
+         .Motivação : Poder desfazer uma ação cometida por acidente , como remover o empregado errado.
+
+         .Solução : Criar uma pilha com os estados dos empregados e sempre que algo for alterado , por no topo da pilha o novo estado.
+
+         .Vantagem : Permitir que o usuário desfaça uma ação cometida acidentalmente.
+
+         .Desvantagem : Por necessitar que vários arraylists de empregados sejam feitos , há um gasto de memória grande.
+
+    .Refazer(jButton10ActionPerformed) :
+
+         .Motivação : Poder refazer uma ação desfeita.
+
+         .Solução : Criar uma pilha com os estados dos empregados e sempre que algo for alterado, esvaziar a pilha, e sempre que uma ação for desfeita , por o estado dos empregados no topo da pilha.
+
+         .Vantagem : Permitir que as ações de Desfazer possam ser desfeitas em caso de acidentalmente desfazer algo a mais.
+
+         .Desvantagem : Por precisar de vários arraylists de empregados sejam feitos , há um gasto de memória grande.
+
+
 
 -Tratamento de erro :
 
